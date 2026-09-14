@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef } from "react";
-import type { Client, ScopeDocument } from "@/app/presentation/types/clients/types";
+import type { Client, ScopeDocument, ScopeTable } from "@/app/presentation/types/clients/types";
 
 function paragraphs(text: string) {
   return text
@@ -20,6 +20,43 @@ function formatMoney(amount: number, currency: string) {
   } catch {
     return `${currency} ${amount.toLocaleString("es")}`;
   }
+}
+
+function ScopeTables({ tables, accent }: { tables?: ScopeTable[]; accent: string }) {
+  const visible = (tables ?? []).filter(
+    (t) => t.columns.some((c) => c.trim()) || t.rows.some((r) => r.some((c) => c.trim()))
+  );
+  if (!visible.length) return null;
+
+  return (
+    <>
+      {visible.map((table) => (
+        <div key={table.id} className="doc-table-wrap">
+          {table.title ? <div className="doc-table-title">{table.title}</div> : null}
+          <table className="doc-table">
+            <thead>
+              <tr>
+                {table.columns.map((col, ci) => (
+                  <th key={ci} style={{ borderBottomColor: accent }}>
+                    {col}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {table.rows.map((row, ri) => (
+                <tr key={ri}>
+                  {row.map((cell, ci) => (
+                    <td key={ci}>{cell}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
+    </>
+  );
 }
 
 function formatDate(iso: string) {
@@ -131,6 +168,20 @@ export const ScopePreview = forwardRef<HTMLDivElement, ScopePreviewProps>(functi
         .doc-preview .price-notes {
           margin-top: 10px; font-size: 11.5px; color: #6b7280; font-style: italic;
         }
+        .doc-preview .doc-table-wrap { margin: 10px 0 14px; }
+        .doc-preview .doc-table-title { font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px; }
+        .doc-preview table.doc-table {
+          width: 100%; border-collapse: collapse; font-size: 12px;
+        }
+        .doc-preview table.doc-table th {
+          text-align: left; padding: 6px 10px; font-weight: 700; color: #374151;
+          border-bottom: 2px solid #e5e7eb;
+        }
+        .doc-preview table.doc-table td {
+          padding: 6px 10px; border-bottom: 1px solid #f1f5f9; color: #1f2937;
+          vertical-align: top;
+        }
+        .doc-preview table.doc-table tr:nth-child(even) td { background: #f8fafc; }
         .doc-preview .doc-foot {
           margin-top: 40px; padding-top: 14px; border-top: 1px solid #e5e7eb;
           font-size: 11px; color: #9ca3af; display: flex; justify-content: space-between; gap: 16px;
@@ -254,6 +305,8 @@ export const ScopePreview = forwardRef<HTMLDivElement, ScopePreviewProps>(functi
               {s.notes ? <div className="price-notes">{s.notes}</div> : null}
             </>
           )}
+
+          <ScopeTables tables={s.tables} accent={accent} />
         </section>
       ))}
 

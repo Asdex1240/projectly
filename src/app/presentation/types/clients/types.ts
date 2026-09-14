@@ -45,12 +45,20 @@ export interface QuotationDocument {
 
 export type ScopeSectionType = "text" | "list" | "phases" | "pricing";
 
+export interface ScopeTable {
+  id: string;
+  title?: string;
+  columns: string[];
+  rows: string[][];
+}
+
 export interface ScopeTextSection {
   id: string;
   type: "text";
   title: string;
   enabled: boolean;
   body: string;
+  tables?: ScopeTable[];
 }
 
 export interface ScopeListSection {
@@ -60,6 +68,7 @@ export interface ScopeListSection {
   enabled: boolean;
   intro?: string;
   items: string[];
+  tables?: ScopeTable[];
 }
 
 export interface ScopePhase {
@@ -76,6 +85,7 @@ export interface ScopePhasesSection {
   enabled: boolean;
   intro?: string;
   phases: ScopePhase[];
+  tables?: ScopeTable[];
 }
 
 export interface ScopePriceItem {
@@ -95,6 +105,7 @@ export interface ScopePricingSection {
   showAmounts: boolean;
   items: ScopePriceItem[];
   notes: string;
+  tables?: ScopeTable[];
 }
 
 export type ScopeSection =

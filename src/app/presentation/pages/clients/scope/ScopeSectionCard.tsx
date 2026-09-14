@@ -10,6 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { ScopeEditorField } from "@/app/presentation/pages/clients/scope/ScopeEditorField";
 import { ScopeListEditor } from "@/app/presentation/pages/clients/scope/ScopeListEditor";
+import { ScopeTableEditor } from "@/app/presentation/pages/clients/scope/ScopeTableEditor";
 
 interface ScopeSectionCardProps {
   section: ScopeSection;
@@ -125,6 +126,13 @@ export function ScopeSectionCard({
         {section.type === "pricing" && (
           <PricingEditor section={section} onPatch={(p) => onChange({ ...section, ...p })} />
         )}
+
+        <ScopeEditorField label="Tablas">
+          <ScopeTableEditor
+            tables={section.tables ?? []}
+            onChange={(tables) => patch({ tables })}
+          />
+        </ScopeEditorField>
       </div>
     </div>
   );

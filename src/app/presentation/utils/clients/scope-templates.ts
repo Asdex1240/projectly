@@ -121,11 +121,27 @@ export function createEmptyScopeDocument(
 export function newScopeSection(type: ScopeSection["type"]): ScopeSection {
   switch (type) {
     case "text":
-      return { id: uid(), type: "text", title: "Nueva sección", enabled: true, body: "" };
+      return { id: uid(), type: "text", title: "Nueva sección", enabled: true, body: "", tables: [] };
     case "list":
-      return { id: uid(), type: "list", title: "Nueva sección", enabled: true, intro: "", items: [""] };
+      return {
+        id: uid(),
+        type: "list",
+        title: "Nueva sección",
+        enabled: true,
+        intro: "",
+        items: [""],
+        tables: [],
+      };
     case "phases":
-      return { id: uid(), type: "phases", title: "Nueva sección", enabled: true, intro: "", phases: [] };
+      return {
+        id: uid(),
+        type: "phases",
+        title: "Nueva sección",
+        enabled: true,
+        intro: "",
+        phases: [],
+        tables: [],
+      };
     case "pricing":
       return {
         id: uid(),
@@ -136,6 +152,7 @@ export function newScopeSection(type: ScopeSection["type"]): ScopeSection {
         showAmounts: true,
         items: [],
         notes: "",
+        tables: [],
       };
   }
 }
