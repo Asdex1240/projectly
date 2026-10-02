@@ -13,8 +13,10 @@ export default function ClientDetailPage(props: PageProps<"/clients/[clientId]">
     quotations,
     scopes,
     createQuotation,
+    importQuotation,
     removeQuotation,
     createScope,
+    importScope,
     removeScope,
   } = useClientDetailPage(clientId);
 
@@ -27,8 +29,10 @@ export default function ClientDetailPage(props: PageProps<"/clients/[clientId]">
       quotations={quotations}
       scopes={scopes}
       onCreateQuotation={createQuotation}
+      onImportQuotation={importQuotation}
       onDeleteQuotation={removeQuotation}
       onCreateScope={createScope}
+      onImportScope={importScope}
       onDeleteScope={removeScope}
     />
   );

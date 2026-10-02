@@ -17,8 +17,10 @@ interface ClientDetailViewProps {
   quotations: QuotationDocument[];
   scopes: ScopeDocument[];
   onCreateQuotation: () => void;
+  onImportQuotation: (raw: string) => void;
   onDeleteQuotation: (id: string) => void;
   onCreateScope: () => void;
+  onImportScope: (raw: string) => void;
   onDeleteScope: (id: string) => void;
 }
 
@@ -27,8 +29,10 @@ export function ClientDetailView({
   quotations,
   scopes,
   onCreateQuotation,
+  onImportQuotation,
   onDeleteQuotation,
   onCreateScope,
+  onImportScope,
   onDeleteScope,
 }: ClientDetailViewProps) {
   return (
@@ -60,6 +64,7 @@ export function ClientDetailView({
             clientId={client.id}
             quotations={quotations}
             onCreate={onCreateQuotation}
+            onImport={onImportQuotation}
             onDelete={onDeleteQuotation}
           />
         </TabsContent>
@@ -68,6 +73,7 @@ export function ClientDetailView({
             clientId={client.id}
             scopes={scopes}
             onCreate={onCreateScope}
+            onImport={onImportScope}
             onDelete={onDeleteScope}
           />
         </TabsContent>

@@ -15,6 +15,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { ImportJsonDialog } from "@/app/presentation/pages/shared/ImportJsonDialog";
+import { QUOTATION_JSON_EXAMPLE, QUOTATION_JSON_GUIDE } from "@/app/presentation/utils/clients/document-import-guides";
 import type { QuotationDocument } from "@/app/presentation/types/clients/types";
 import { calculateQuotationTotals, formatCurrency } from "@/app/presentation/utils/clients/quotation-totals";
 
@@ -22,13 +24,20 @@ interface QuotationsTabProps {
   clientId: string;
   quotations: QuotationDocument[];
   onCreate: () => void;
+  onImport: (raw: string) => void;
   onDelete: (id: string) => void;
 }
 
-export function QuotationsTab({ clientId, quotations, onCreate, onDelete }: QuotationsTabProps) {
+export function QuotationsTab({ clientId, quotations, onCreate, onImport, onDelete }: QuotationsTabProps) {
   return (
     <div className="flex flex-col gap-4 pt-4">
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-2">
+        <ImportJsonDialog
+          title="Generar cotización desde JSON"
+          example={QUOTATION_JSON_EXAMPLE}
+          guide={QUOTATION_JSON_GUIDE}
+          onImport={onImport}
+        />
         <Button onClick={onCreate}>
           <Plus />
           Nueva cotización

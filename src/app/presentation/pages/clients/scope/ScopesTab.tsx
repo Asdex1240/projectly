@@ -15,19 +15,28 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { ImportJsonDialog } from "@/app/presentation/pages/shared/ImportJsonDialog";
+import { SCOPE_JSON_EXAMPLE, SCOPE_JSON_GUIDE } from "@/app/presentation/utils/clients/document-import-guides";
 import type { ScopeDocument } from "@/app/presentation/types/clients/types";
 
 interface ScopesTabProps {
   clientId: string;
   scopes: ScopeDocument[];
   onCreate: () => void;
+  onImport: (raw: string) => void;
   onDelete: (id: string) => void;
 }
 
-export function ScopesTab({ clientId, scopes, onCreate, onDelete }: ScopesTabProps) {
+export function ScopesTab({ clientId, scopes, onCreate, onImport, onDelete }: ScopesTabProps) {
   return (
     <div className="flex flex-col gap-4 pt-4">
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-2">
+        <ImportJsonDialog
+          title="Generar alcance desde JSON"
+          example={SCOPE_JSON_EXAMPLE}
+          guide={SCOPE_JSON_GUIDE}
+          onImport={onImport}
+        />
         <Button onClick={onCreate}>
           <Plus />
           Nuevo alcance

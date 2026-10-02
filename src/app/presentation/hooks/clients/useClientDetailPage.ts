@@ -9,6 +9,10 @@ import { useProfileStore } from "@/lib/stores/profile-store";
 import { uid } from "@/app/presentation/utils/clients/ids";
 import { generateQuotationNumber } from "@/app/presentation/utils/clients/quotation-totals";
 import { createEmptyScopeDocument } from "@/app/presentation/utils/clients/scope-templates";
+import {
+  parseQuotationJson,
+  parseScopeJson,
+} from "@/app/presentation/utils/clients/document-import";
 import { useStoreHydrated } from "@/app/presentation/hooks/clients/useStoreHydrated";
 import type { QuotationDocument } from "@/app/presentation/types/clients/types";
 
@@ -64,14 +68,28 @@ export function useClientDetailPage(clientId: string) {
     router.push(`/clients/${clientId}/scopes/${doc.id}`);
   };
 
+  const importQuotation = (raw: string) => {
+    const doc = parseQuotationJson(raw, clientId, profile);
+    addQuotation(doc);
+    router.push(`/clients/${clientId}/quotations/${doc.id}`);
+  };
+
+  const importScope = (raw: string) => {
+    const doc = parseScopeJson(raw, clientId, profile);
+    addScope(doc);
+    router.push(`/clients/${clientId}/scopes/${doc.id}`);
+  };
+
   return {
     hydrated,
     client,
     quotations,
     scopes,
     createQuotation,
+    importQuotation,
     removeQuotation,
     createScope,
+    importScope,
     removeScope,
   };
 }
